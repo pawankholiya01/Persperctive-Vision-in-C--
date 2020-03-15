@@ -179,6 +179,7 @@ private:
 		}
 		else
 		{
+			
 			glGetProgramiv(shader, GL_LINK_STATUS, &success);
 			if (!success)
 			{
