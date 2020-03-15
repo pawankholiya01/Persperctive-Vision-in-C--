@@ -188,16 +188,13 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 
-	// -------------------------
 	unsigned int texture1, texture2;
-	// ---------
 	glGenTextures(1, &texture1);
 	glBindTexture(GL_TEXTURE_2D, texture1);
 
@@ -220,7 +217,7 @@ int main()
 		std::cout << "Failed to load texture" << std::endl;
 	}
 	stbi_image_free(data);
-	// ---------
+
 	glGenTextures(1, &texture2);
 	glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -243,12 +240,12 @@ int main()
 	}
 	stbi_image_free(data);
 
-	// -------------------------------------------------------------------------------------------
+
 	ourShader.use();
 	ourShader.setInt("texture1", 0);
 	ourShader.setInt("texture2", 1);
 
-	// -----------------------------------------------------------------------------------------------------------
+
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	ourShader.setMat4("projection", projection);
 
@@ -256,7 +253,6 @@ int main()
 
 
 
-	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
 		float currentFrame = glfwGetTime();
@@ -315,7 +311,7 @@ int main()
 	glfwTerminate();
 	return 0;
 }
-
+//Face Position will stimulate camera Input in 3-D Environment 
 void processInput(GLFWwindow *window)
 {
 	tuple <float, float, float> loc;
@@ -325,10 +321,13 @@ void processInput(GLFWwindow *window)
 		glfwSetWindowShouldClose(window, true);
 
 	float cameraSpeed = 2.5 * deltaTime;
+	
+// If we would control camera via keyboard 	
+	
 /*	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		cameraPos += cameraSpeed * cameraFront;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		cameraPos -= cameraSpeed * cameraFront;*/
+		cameraPos -= cameraSpeed * cameraFront;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		cameraPos += (cameraFront) * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -338,7 +337,7 @@ void processInput(GLFWwindow *window)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		cameraPos += glm::normalize(glm::cross(cameraPos, cameraUp)) * cameraSpeed;
 	
-	
+	*/
 	float x = ((20.0f - (int)(get<2>(loc)/10) )/ 3.0f);
 	
 	float z = cbrt(64.0f -abs( pow(get<0>(loc),3)) - abs(pow(get<1>(loc),3)));
@@ -355,7 +354,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-
+/*
+ * Currently only working based on face location anf not specifically eye's as 
+ * eye's position are almost fixed relative to face so,
+ * Commented out all eye cascade codes to process a little faster 
+ */
 
 Rect rec(0, 0, 620, 420), temp;;
 tuple <float, float, float> loc;
@@ -363,7 +366,6 @@ tuple<float, float, float> EyeLocation()
 {
 
 	
-	//	CvCapture* capture;
 	Mat frame;
 	
 	if (!face_cascade.load(face_cascade_name)) { printf("--(!)Error loading\n"); return make_tuple(1,1,1); };
