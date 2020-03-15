@@ -10,14 +10,6 @@
 #include <chrono> 
 using namespace std::chrono;
 
-
-
-
-//#include <windows.h> 
-//#include <GL/gl.h> 
-
-
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "stb_image.h"
@@ -51,7 +43,6 @@ RNG rng(12345);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
-// settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
@@ -112,7 +103,7 @@ int main()
 	// -----------------------------
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT);
-	Shader ourShader("7.2.camera.vs", "7.2.camera.fs");
+	Shader ourShader("camera.vs", "camera.fs");
 
 	// ------------------------------------------------------------------
 	float vertices[] = {
